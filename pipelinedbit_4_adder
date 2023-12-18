@@ -1,0 +1,66 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 14.12.2023 15:50:02
+// Design Name: 
+// Module Name: pipelinedbit_4_adder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module pipelinedbit_4_adder(s,a,b,cin,clk);
+input [3:0]a,b;
+input cin,clk;
+output [4:0]s;
+wire x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23,x24,x25;
+dff d1(clk,a[1],x1);
+dff d2(clk,b[1],x2);
+dff d3(clk,a[2],x3);
+dff d4(clk,b[2],x4);
+dff d5(clk,x3,x5);
+dff d6(clk,x4,x6);
+dff d7(clk,a[3],x7);
+dff d8(clk,b[3],x8);
+dff d9(clk,x7,x9);
+dff d10(clk,x8,x10);
+dff d11(clk,x9,x11);
+dff d12(clk,x10,x12);
+fa f1(x13,x14,b[0],a[0],cin);
+dff d13(clk,x14,x15);
+fa f2(x16,x17,x1,x2,x15);
+dff d14(clk,x17,x18);
+fa f3(x19,x20,x18,x5,x6);
+dff d15(clk,x20,x21);
+fa f4(s[3],s[4],x21,x11,x12);
+dff d16(clk,x19,s[2]);
+dff d17(clk,x16,x22);
+dff d18(clk,x22,s[1]);
+dff d19(clk,x13,x23);
+dff d20(clk,x23,x24);
+dff d21(clk,x24,s[0]);
+endmodule
+
+module dff(clk,d,q);
+input clk,d;
+output reg q;
+always @(posedge clk)
+q<=d;
+endmodule
+
+module fa(s,c,a,b,cin);
+input a,b,cin;
+output s,c;
+assign {c,s}=a+b+cin;
+endmodule
