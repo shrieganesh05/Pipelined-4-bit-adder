@@ -1,0 +1,44 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 14.12.2023 16:21:18
+// Design Name: 
+// Module Name: pip4bittb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module pip4bittb;
+reg [3:0]a,b;
+reg cin,clk;
+wire[4:0]s;
+pipelinedbit_4_adder uut(.s(s),.a(a),.b(b),.cin(cin),.clk(clk));
+always 
+#5 clk = ~clk;
+initial begin
+a=4'b0000;
+b=4'b0000;
+cin=1'b0;
+clk=1'b1;
+repeat (16) begin
+#10 a = a + 1;
+end
+repeat (16) begin
+#10 b = b + 1;
+end
+#20
+$finish;
+end
+endmodule
